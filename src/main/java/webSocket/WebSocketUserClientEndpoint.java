@@ -1,18 +1,8 @@
 package webSocket;
 
-import iotpackage.Lamp;
-
+import javax.websocket.*;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
-import javax.websocket.ClientEndpoint;
-import javax.websocket.CloseReason;
-import javax.websocket.ContainerProvider;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 
 /**
  * ChatServer Client
@@ -20,14 +10,13 @@ import javax.websocket.WebSocketContainer;
  * @author Jiji_Sasidharan
  */
 @ClientEndpoint
-public class WebSocketClientEndpoint {
+public class WebSocketUserClientEndpoint {
 
     private Session userSession = null;
-    private HashMap<String,MessageHandler> messageHandlerHashMap = new HashMap<>();
-    //private ArrayList<MessageHandler> messageHandlerArrayList = new ArrayList<>();
+    private UserHandler userHandler;
 
 
-    public WebSocketClientEndpoint(URI endpointURI) {
+    public WebSocketUserClientEndpoint(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, endpointURI);
@@ -66,21 +55,21 @@ public class WebSocketClientEndpoint {
      */
     @OnMessage
     public void onMessage(String message) {
-        Message messageObject = new Message().decode(message);
-        messageHandlerHashMap.get(messageObject.getHandlerID()).handleMessage(messageObject);
+
+
+        if (this.userHandler != null) {
+            User user = new User().decode(message);
+            this.userHandler.handleUser(user);
+        }
     }
 
     /**
      * register message handler
      *
-     * @param msgHandler
+     * @param userHandler
      */
-    public void addMessageHandler(String handleID,MessageHandler msgHandler) {
-        messageHandlerHashMap.put(handleID,msgHandler);
-    }
-
-    public void removeMessageHandler(String hanlerID){
-        messageHandlerHashMap.remove(hanlerID);
+    public void addUserHandler(UserHandler userHandler) {
+        this.userHandler = userHandler;
     }
 
     /**
@@ -97,8 +86,8 @@ public class WebSocketClientEndpoint {
      *
      * @author Jiji_Sasidharan
      */
-    public static interface MessageHandler {
+    public static interface UserHandler {
 
-        public void handleMessage(Message message);
+        public void handleUser(User user);
     }
 }

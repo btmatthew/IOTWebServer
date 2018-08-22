@@ -5,14 +5,19 @@ import java.net.URISyntaxException;
 
 public class WebSocketController {
 
-    public WebSocketClientEndpoint setWebSocket() throws URISyntaxException {
+    public WebSocketMessageClientEndpoint setDevicesWebSocket() throws URISyntaxException {
 
-
-        // open websocket
-        final WebSocketClientEndpoint clientEndPoint = new WebSocketClientEndpoint(new URI("ws://localhost:8080/iot/iot/server"));
-
-        //clientEndPoint.sendMessage("{'action':'addChannel'}");
+        // open websocket for device purposes
+        final WebSocketMessageClientEndpoint clientEndPoint = new WebSocketMessageClientEndpoint(new URI("ws://localhost:8080/iot/iot/1"));
 
         return clientEndPoint;
     }
+
+    public WebSocketUserClientEndpoint setUsersWebSocket() throws URISyntaxException {
+
+        // open websocket for user purposes
+        final WebSocketUserClientEndpoint clientEndPoint = new WebSocketUserClientEndpoint(new URI("ws://localhost:8080/iot/user/1"));
+        return clientEndPoint;
+    }
+
 }

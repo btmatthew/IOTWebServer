@@ -7,17 +7,29 @@ public class Message {
     private String to;
     private String action;
     private String handlerID;
-    private Gson gson = new Gson();
 
-    public Message(){
+    private String lampStatus;
+
+    private String userName;
+    private String userToken;
+
+    Message() {
 
     }
 
-    public Message(String from, String to, String action){
-        this.from=from;
-        this.to=to;
-        this.action=action;
-        this.handlerID= String.valueOf(System.currentTimeMillis());
+    public Message(String from, String to, String action) {
+        this.from = from;
+        this.to = to;
+        this.action = action;
+        this.handlerID = String.valueOf(System.currentTimeMillis());
+    }
+
+    public String encode() {
+        return new Gson().toJson(this);
+    }
+
+    Message decode(String s) {
+        return new Gson().fromJson(s, Message.class);
     }
 
     public String getFrom() {
@@ -44,16 +56,32 @@ public class Message {
         this.action = action;
     }
 
-    public String encode(){
-        return gson.toJson(this);
-    }
-
-    public Message decode(String s){
-        return gson.fromJson(s, Message.class);
-    }
-
 
     public String getHandlerID() {
         return handlerID;
+    }
+
+    public String getLampStatus() {
+        return lampStatus;
+    }
+
+    public void setLampStatus(String lampStatus) {
+        this.lampStatus = lampStatus;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 }
