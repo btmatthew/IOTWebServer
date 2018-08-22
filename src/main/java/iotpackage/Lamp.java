@@ -7,30 +7,17 @@ import java.io.IOException;
 
 public class Lamp {
 
-    private String lampID;
-    private String sensorValue;
-    private String senderID;
     private WebSocketMessageClientEndpoint webSocket;
 
-
-    Lamp(String lampID, WebSocketMessageClientEndpoint webSocket, String senderID) {
-        this.lampID = lampID;
-        this.webSocket = webSocket;
-        this.senderID = senderID;
-    }
-
-    private String getSenderID() {
-        return senderID;
-    }
-
-    private String getLampID() {
-        return lampID;
-    }
-
-    String lampStatus() throws IOException {
+    String lampStatus(String from, String to, String userName,String token) throws IOException {
 
         final String[] response = new String[1];
-        Message message = new Message(getSenderID(), getLampID(), "lampStatus");
+        Message message = new Message();
+        message.setFrom(from);
+        message.setTo(to);
+        message.setAction("lampStatus");
+        message.setUserToken(token);
+        message.setUserName(userName);
 
         webSocket.sendMessage(message.encode());
 
@@ -54,6 +41,10 @@ public class Lamp {
             }
         }
         return response[0];
+    }
+
+    public void setWebSocket(WebSocketMessageClientEndpoint webSocket) {
+        this.webSocket = webSocket;
     }
 
 //    public String turnLampOn() throws IOException {

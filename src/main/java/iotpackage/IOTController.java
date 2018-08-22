@@ -24,9 +24,13 @@ public class IOTController {
     }
 
     //http://localhost:80/status?id=192.168.0.100
-    @RequestMapping(value = "/status", method = RequestMethod.GET)
-    public String status(@RequestParam(value="id",defaultValue = "") String lampID) throws Exception {
-        return new Lamp(lampID,webSocket,serverID).lampStatus();
+    @RequestMapping(value = "/lampStatus", method = RequestMethod.GET)
+    public String status(@RequestParam(value="id",defaultValue = "") String lampID,
+                         @RequestParam(value="userName",defaultValue = "") String userName,
+                         @RequestParam(value="userToken",defaultValue = "") String token) throws Exception {
+        Lamp lamp = new Lamp();
+        lamp.setWebSocket(webSocket);
+        return lamp.lampStatus(serverID,lampID,userName,token);
     }
 
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)

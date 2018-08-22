@@ -13,14 +13,7 @@ public class Message {
     private String userName;
     private String userToken;
 
-    Message() {
-
-    }
-
-    public Message(String from, String to, String action) {
-        this.from = from;
-        this.to = to;
-        this.action = action;
+    public Message() {
         this.handlerID = String.valueOf(System.currentTimeMillis());
     }
 
