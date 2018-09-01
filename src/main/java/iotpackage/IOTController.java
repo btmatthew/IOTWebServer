@@ -24,19 +24,31 @@ public class IOTController {
     }
 
     //http://localhost:80/status?id=192.168.0.100
-    @RequestMapping(value = "/lampStatus", method = RequestMethod.GET)
-    public String status(@RequestParam(value="id",defaultValue = "") String lampID,
+    @RequestMapping(value = "/lampAction", method = RequestMethod.GET)
+    public String status(@RequestParam(value="deviceId",defaultValue = "") String lampID,
                          @RequestParam(value="userName",defaultValue = "") String userName,
-                         @RequestParam(value="userToken",defaultValue = "") String token) throws Exception {
+                         @RequestParam(value="userToken",defaultValue = "") String token,
+                         @RequestParam(value="lampAction",defaultValue = "") String action) throws Exception {
+
+        while(webSocket.userSession==null){
+            this.webSocket = new WebSocketController().setDevicesWebSocket();
+        }
+
         Lamp lamp = new Lamp();
         lamp.setWebSocket(webSocket);
-        return lamp.lampStatus(serverID,lampID,userName,token);
+        return lamp.lampAction(serverID,lampID,userName,token,action);
     }
 
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
-    public @ResponseBody String createEmployee(@RequestBody User user) throws URISyntaxException {
+    public @ResponseBody String registerUser(@RequestBody User user) throws URISyntaxException {
         WebSocketUserClientEndpoint userWebSocket = new WebSocketController().setUsersWebSocket();
         return new UserActions(userWebSocket).registerUser(user);
+    }
+
+    @RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+    public @ResponseBody String userLogin(@RequestBody User user) throws URISyntaxException {
+        WebSocketUserClientEndpoint userWebSocket = new WebSocketController().setUsersWebSocket();
+        return new UserActions(userWebSocket).userLogin(user);
     }
 
 

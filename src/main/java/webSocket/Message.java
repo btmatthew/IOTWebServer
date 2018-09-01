@@ -2,10 +2,15 @@ package webSocket;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class Message {
     private String from;
     private String to;
     private String action;
+
+
+
     private String handlerID;
 
     private String lampStatus;
@@ -13,8 +18,13 @@ public class Message {
     private String userName;
     private String userToken;
 
+    private String deviceDescription;
+    private String deviceID;
+    private String deviceType;
+
+    private ArrayList<Message> deviceList;
+
     public Message() {
-        this.handlerID = String.valueOf(System.currentTimeMillis());
     }
 
     public String encode() {
@@ -54,6 +64,10 @@ public class Message {
         return handlerID;
     }
 
+    public void generateHandlerID() {
+        this.handlerID = String.valueOf(System.currentTimeMillis());
+    }
+
     public String getLampStatus() {
         return lampStatus;
     }
@@ -76,5 +90,37 @@ public class Message {
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
+    }
+
+    public ArrayList<Message> getDeviceList() {
+        return deviceList;
+    }
+
+    public void setDeviceList(ArrayList<Message> deviceList) {
+        this.deviceList = deviceList;
+    }
+
+    public String getDeviceDescription() {
+        return deviceDescription;
+    }
+
+    public void setDeviceDescription(String deviceDescription) {
+        this.deviceDescription = deviceDescription;
+    }
+
+    public String getDeviceID() {
+        return deviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        this.deviceID = deviceID;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 }

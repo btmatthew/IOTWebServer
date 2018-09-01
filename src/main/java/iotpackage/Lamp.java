@@ -9,15 +9,16 @@ public class Lamp {
 
     private WebSocketMessageClientEndpoint webSocket;
 
-    String lampStatus(String from, String to, String userName,String token) throws IOException {
+    String lampAction(String from, String to, String userName, String token, String action) throws IOException {
 
         final String[] response = new String[1];
         Message message = new Message();
         message.setFrom(from);
         message.setTo(to);
-        message.setAction("lampStatus");
+        message.setAction(action);
         message.setUserToken(token);
         message.setUserName(userName);
+        message.generateHandlerID();
 
         webSocket.sendMessage(message.encode());
 
@@ -28,7 +29,9 @@ public class Lamp {
         int count = 0;
         while (response[0] == null) {
             if (count == 15) {
-                response[0] = "{\"error\":\"Cannot connect to Web Socket Server.\"}";
+                message.setAction("CommunicationError");
+                response[0]=message.encode();
+                //response[0] = "{\"error\":\"Cannot connect to Web Socket Server.\"}";
                 break;
             } else {
                 try {
@@ -111,8 +114,8 @@ public class Lamp {
 
 //    public String jsonToObject() throws IOException {
 //        ObjectMapper objectMapper = new ObjectMapper();
-//        Lamp emp = objectMapper.readValue(lampStatus(), Lamp.class);
+//        Lamp emp = objectMapper.readValue(lampAction(), Lamp.class);
 //        System.out.println(emp.sensorValue);
-//        return emp.lampStatus();
+//        return emp.lampAction();
 //    }
 }

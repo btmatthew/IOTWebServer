@@ -2,6 +2,8 @@ package webSocket;
 
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 public class User {
 
     private String action;
@@ -12,8 +14,26 @@ public class User {
     private String userName;
     private String userToken;
 
-    public User(){
+    public User() {
 
+    }
+
+    public boolean confirmFieldsForLogin() {
+        return !checkString(userEmail) && !checkString(password);
+    }
+
+    public boolean confirmFieldsForRegistration() {
+        return !checkString(userEmail) && !checkString(password) && !checkString(userName);
+    }
+
+    private boolean checkString(String text) {
+        return !text.isEmpty() && !Objects.equals(text, "");
+    }
+
+    public void purgeConfidentialData(){
+        this.password="";
+        this.userEmail="";
+        this.userID=-1;
     }
 
     public String encode() {
@@ -21,7 +41,7 @@ public class User {
     }
 
     public User decode(String s) {
-        return new Gson().fromJson(s,User.class);
+        return new Gson().fromJson(s, User.class);
     }
 
 

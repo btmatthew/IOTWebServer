@@ -1,9 +1,6 @@
 package webSocket;
 
-import iotpackage.Lamp;
-
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
@@ -22,7 +19,7 @@ import javax.websocket.WebSocketContainer;
 @ClientEndpoint
 public class WebSocketMessageClientEndpoint {
 
-    private Session userSession = null;
+    public Session userSession = null;
     private HashMap<String,MessageHandler> messageHandlerHashMap = new HashMap<>();
 
 
