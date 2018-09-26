@@ -2,7 +2,7 @@ package iotpackage;
 
 
 import org.springframework.web.bind.annotation.*;
-import webSocket.User;
+import webSocket.objects.User;
 import webSocket.WebSocketController;
 import webSocket.WebSocketMessageClientEndpoint;
 import webSocket.WebSocketUserClientEndpoint;
@@ -23,12 +23,12 @@ public class IOTController {
         }
     }
 
-    //http://localhost:80/status?id=192.168.0.100
     @RequestMapping(value = "/lampAction", method = RequestMethod.GET)
     public String status(@RequestParam(value="deviceId",defaultValue = "") String lampID,
                          @RequestParam(value="userName",defaultValue = "") String userName,
                          @RequestParam(value="userToken",defaultValue = "") String token,
-                         @RequestParam(value="lampAction",defaultValue = "") String action) throws Exception {
+                         @RequestParam(value="lampAction",defaultValue = "") String action,
+                         @RequestParam(value="newDeviceDescription",defaultValue = "") String newDeviceDescription) throws Exception {
 
         while(webSocket.userSession==null){
             this.webSocket = new WebSocketController().setDevicesWebSocket();
@@ -36,8 +36,10 @@ public class IOTController {
 
         Lamp lamp = new Lamp();
         lamp.setWebSocket(webSocket);
-        return lamp.lampAction(serverID,lampID,userName,token,action);
+        return lamp.lampAction(serverID,lampID,userName,token,action,newDeviceDescription);
     }
+
+
 
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public @ResponseBody String registerUser(@RequestBody User user) throws URISyntaxException {

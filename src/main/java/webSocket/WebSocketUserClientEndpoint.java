@@ -1,8 +1,9 @@
 package webSocket;
 
+import webSocket.objects.User;
+
 import javax.websocket.*;
 import java.net.URI;
-import java.util.HashMap;
 
 /**
  * ChatServer Client

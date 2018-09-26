@@ -1,5 +1,7 @@
 package webSocket;
 
+import webSocket.objects.Message;
+
 import java.net.URI;
 import java.util.HashMap;
 import javax.websocket.ClientEndpoint;

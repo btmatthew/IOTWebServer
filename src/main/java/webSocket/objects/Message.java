@@ -1,4 +1,4 @@
-package webSocket;
+package webSocket.objects;
 
 import com.google.gson.Gson;
 
@@ -8,8 +8,6 @@ public class Message {
     private String from;
     private String to;
     private String action;
-
-
 
     private String handlerID;
 
@@ -24,6 +22,9 @@ public class Message {
 
     private ArrayList<Message> deviceList;
 
+    private int fanOption;
+    private FanParameters fanParameters;
+
     public Message() {
     }
 
@@ -31,7 +32,7 @@ public class Message {
         return new Gson().toJson(this);
     }
 
-    Message decode(String s) {
+    public Message decode(String s) {
         return new Gson().fromJson(s, Message.class);
     }
 
@@ -122,5 +123,21 @@ public class Message {
 
     public void setDeviceType(String deviceType) {
         this.deviceType = deviceType;
+    }
+
+    public FanParameters getFanParameters() {
+        return fanParameters;
+    }
+
+    public void setFanParameters(FanParameters fanParameters) {
+        this.fanParameters = fanParameters;
+    }
+
+    public int getFanOption() {
+        return fanOption;
+    }
+
+    public void setFanOption(int fanOption) {
+        this.fanOption = fanOption;
     }
 }

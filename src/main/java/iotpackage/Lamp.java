@@ -1,6 +1,6 @@
 package iotpackage;
 
-import webSocket.Message;
+import webSocket.objects.Message;
 import webSocket.WebSocketMessageClientEndpoint;
 
 import java.io.IOException;
@@ -9,7 +9,7 @@ public class Lamp {
 
     private WebSocketMessageClientEndpoint webSocket;
 
-    String lampAction(String from, String to, String userName, String token, String action) throws IOException {
+    String lampAction(String from, String to, String userName, String token, String action, String newDeviceDescription) throws IOException {
 
         final String[] response = new String[1];
         Message message = new Message();
@@ -19,6 +19,7 @@ public class Lamp {
         message.setUserToken(token);
         message.setUserName(userName);
         message.generateHandlerID();
+        message.setDeviceDescription(newDeviceDescription);
 
         webSocket.sendMessage(message.encode());
 
@@ -30,7 +31,7 @@ public class Lamp {
         while (response[0] == null) {
             if (count == 15) {
                 message.setAction("CommunicationError");
-                response[0]=message.encode();
+                response[0] = message.encode();
                 //response[0] = "{\"error\":\"Cannot connect to Web Socket Server.\"}";
                 break;
             } else {

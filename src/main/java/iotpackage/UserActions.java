@@ -1,7 +1,7 @@
 package iotpackage;
 
 
-import webSocket.User;
+import webSocket.objects.User;
 import webSocket.WebSocketUserClientEndpoint;
 
 
