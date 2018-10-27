@@ -39,8 +39,6 @@ public class IOTController {
         return lamp.lampAction(serverID,lampID,userName,token,action,newDeviceDescription);
     }
 
-
-
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
     public @ResponseBody String registerUser(@RequestBody User user) throws URISyntaxException {
         WebSocketUserClientEndpoint userWebSocket = new WebSocketController().setUsersWebSocket();
@@ -52,16 +50,4 @@ public class IOTController {
         WebSocketUserClientEndpoint userWebSocket = new WebSocketController().setUsersWebSocket();
         return new UserActions(userWebSocket).userLogin(user);
     }
-
-
-//    @RequestMapping("/on")
-//    public String turnLampOn(@RequestParam(value="ip",defaultValue = "") String lampIP) throws Exception {
-//        return new Lamp("123",lampIP,webSocket,serverID).turnLampOn();
-//    }
-//
-//    @RequestMapping("/off")
-//    public String turnLampOff(@RequestParam(value="ip",defaultValue = "") String lampIP) throws Exception {
-//        return new Lamp("123",lampIP,webSocket,serverID).turnLampOff();
-//    }
-
 }

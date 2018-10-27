@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class Message {
+    
     private String from;
     private String to;
     private String action;
