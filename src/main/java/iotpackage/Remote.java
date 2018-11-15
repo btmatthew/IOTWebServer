@@ -3,11 +3,26 @@ package iotpackage;
 import webSocket.WebSocketMessageClientEndpoint;
 import webSocket.objects.Message;
 
-public class Lamp {
+public class Remote {
+    private String action;
+    private String from;
+    private String to;
+    private String userName;
+    private String token;
+    private int fanOption;
+
+    public Remote(String action,String from, String to, String userName, String token, int fanOption) {
+        this.action = action;
+        this.from = from;
+        this.to = to;
+        this.userName = userName;
+        this.token = token;
+        this.fanOption = fanOption;
+    }
 
     private WebSocketMessageClientEndpoint webSocket;
 
-    String lampAction(String from, String to, String userName, String token, String action, String newDeviceDescription) {
+    String remoteAction() {
 
         final String[] response = new String[1];
         Message message = new Message();
@@ -17,7 +32,7 @@ public class Lamp {
         message.setUserToken(token);
         message.setUserName(userName);
         message.generateHandlerID();
-        message.setDeviceDescription(newDeviceDescription);
+        message.setFanOption(fanOption);
 
         webSocket.sendMessage(message.encode());
 
@@ -48,5 +63,6 @@ public class Lamp {
     public void setWebSocket(WebSocketMessageClientEndpoint webSocket) {
         this.webSocket = webSocket;
     }
+
 
 }

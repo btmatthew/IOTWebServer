@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class Message {
-    
+
     private String from;
     private String to;
     private String action;
@@ -24,7 +24,16 @@ public class Message {
     private ArrayList<Message> deviceList;
 
     private int fanOption;
-    private FanParameters fanParameters;
+    private boolean fanStatus;
+    private int fanSpeed;
+    private int fanMode;
+    private boolean rotation;
+    private boolean ion;
+
+    private boolean tvStatus;
+
+    private float humidity;
+    private float temperature;
 
     public Message() {
     }
@@ -35,6 +44,46 @@ public class Message {
 
     public Message decode(String s) {
         return new Gson().fromJson(s, Message.class);
+    }
+
+    public boolean isFanStatus() {
+        return fanStatus;
+    }
+
+    public void setFanStatus(boolean fanStatus) {
+        this.fanStatus = fanStatus;
+    }
+
+    public int getFanSpeed() {
+        return fanSpeed;
+    }
+
+    public void setFanSpeed(int fanSpeed) {
+        this.fanSpeed = fanSpeed;
+    }
+
+    public int getFanMode() {
+        return fanMode;
+    }
+
+    public void setFanMode(int fanMode) {
+        this.fanMode = fanMode;
+    }
+
+    public boolean isRotation() {
+        return rotation;
+    }
+
+    public void setRotation(boolean rotation) {
+        this.rotation = rotation;
+    }
+
+    public boolean isIon() {
+        return ion;
+    }
+
+    public void setIon(boolean ion) {
+        this.ion = ion;
     }
 
     public String getFrom() {
@@ -126,19 +175,35 @@ public class Message {
         this.deviceType = deviceType;
     }
 
-    public FanParameters getFanParameters() {
-        return fanParameters;
-    }
-
-    public void setFanParameters(FanParameters fanParameters) {
-        this.fanParameters = fanParameters;
-    }
-
     public int getFanOption() {
         return fanOption;
     }
 
     public void setFanOption(int fanOption) {
         this.fanOption = fanOption;
+    }
+
+    public boolean isTvStatus() {
+        return tvStatus;
+    }
+
+    public void setTvStatus(boolean tvStatus) {
+        this.tvStatus = tvStatus;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(float humidity) {
+        this.humidity = humidity;
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
     }
 }
