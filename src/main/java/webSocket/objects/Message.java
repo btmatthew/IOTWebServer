@@ -34,6 +34,7 @@ public class Message {
 
     private float humidity;
     private float temperature;
+    private String tempSensorStatus;
 
     public Message() {
     }
@@ -205,5 +206,13 @@ public class Message {
 
     public void setTemperature(float temperature) {
         this.temperature = temperature;
+    }
+
+    public String getTempSensorStatus() {
+        return tempSensorStatus;
+    }
+
+    public void setTempSensorStatus(String tempSensorStatus) {
+        this.tempSensorStatus = tempSensorStatus;
     }
 }
