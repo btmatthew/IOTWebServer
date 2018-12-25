@@ -81,21 +81,27 @@ public class ForwardData {
         webSocket.sendMessage(message.encode());
 
         webSocket.addMessageHandler(message.getHandlerID(), message1 -> {
-            reply(message1.encode());
+            setJSONReply(message1.encode());
             webSocket.removeMessageHandler(message1.getHandlerID());
         });
     }
 
-    private void reply(String jsonReply) {
+    private void setJSONReply(String jsonReply) {
         this.jsonReply = jsonReply;
+    }
+
+    private String getJsonReply(){
+        return this.jsonReply;
     }
 
     public String waitForReply() {
         int count = 0;
-        while (this.jsonReply == null) {
+        while (getJsonReply() == null) {
             if (count == 15) {
-                message.setAction("CommunicationError");
-                this.jsonReply = message.encode();
+                webSocket.removeMessageHandler(message.getHandlerID());
+                Message errorMessage = new Message();
+                errorMessage.setAction("CommunicationError");
+                setJSONReply(errorMessage.encode());
                 break;
             } else {
                 try {
@@ -107,6 +113,6 @@ public class ForwardData {
                 }
             }
         }
-        return jsonReply;
+        return getJsonReply();
     }
 }

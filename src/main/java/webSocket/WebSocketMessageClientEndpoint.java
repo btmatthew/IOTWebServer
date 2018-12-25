@@ -21,11 +21,11 @@ import javax.websocket.WebSocketContainer;
 @ClientEndpoint
 public class WebSocketMessageClientEndpoint {
 
-    public Session userSession = null;
+    private Session socketSession = null;
     private HashMap<String,MessageHandler> messageHandlerHashMap = new HashMap<>();
 
 
-    public WebSocketMessageClientEndpoint(URI endpointURI) {
+    WebSocketMessageClientEndpoint(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, endpointURI);
@@ -37,24 +37,24 @@ public class WebSocketMessageClientEndpoint {
     /**
      * Callback hook for Connection open events.
      *
-     * @param userSession the userSession which is opened.
+     * @param userSession the socketSession which is opened.
      */
     @OnOpen
     public void onOpen(Session userSession) {
         System.out.println("opening websocket");
-        this.userSession = userSession;
+        this.socketSession = userSession;
     }
 
     /**
      * Callback hook for Connection close events.
      *
-     * @param userSession the userSession which is getting closed.
+     * @param userSession the socketSession which is getting closed.
      * @param reason the reason for connection close
      */
     @OnClose
     public void onClose(Session userSession, CloseReason reason) {
         System.out.println("closing websocket");
-        this.userSession = null;
+        this.socketSession = null;
     }
 
     /**
@@ -87,7 +87,7 @@ public class WebSocketMessageClientEndpoint {
      * @param message
      */
     public void sendMessage(String message) {
-        this.userSession.getAsyncRemote().sendText(message);
+        this.socketSession.getAsyncRemote().sendText(message);
     }
 
     /**
@@ -95,8 +95,8 @@ public class WebSocketMessageClientEndpoint {
      *
      * @author Jiji_Sasidharan
      */
-    public static interface MessageHandler {
+    public interface MessageHandler {
 
-        public void handleMessage(Message message);
+        void handleMessage(Message message);
     }
 }
