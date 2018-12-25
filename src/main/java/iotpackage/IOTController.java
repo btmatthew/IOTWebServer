@@ -1,9 +1,7 @@
 package iotpackage;
 
 
-import iotpackage.WebSockets.Lamp;
-import iotpackage.WebSockets.Remote;
-import iotpackage.WebSockets.Sensor;
+import iotpackage.WebSockets.ForwardData;
 import org.springframework.web.bind.annotation.*;
 import webSocket.objects.User;
 import webSocket.WebSocketController;
@@ -32,12 +30,11 @@ public class IOTController {
                        @RequestParam(value = "userName", defaultValue = "") String userName,
                        @RequestParam(value = "userToken", defaultValue = "") String token,
                        @RequestParam(value = "lampAction", defaultValue = "") String action,
-                       @RequestParam(value = "newDeviceDescription", defaultValue = "") String newDeviceDescription) throws Exception {
+                       @RequestParam(value = "newDeviceDescription", defaultValue = "") String newDeviceDescription) {
 
-        while (webSocket.userSession == null) {
-            this.webSocket = new WebSocketController().setDevicesWebSocket();
-        }
-        return new Lamp(serverID, lampID, userName, token, action, newDeviceDescription,webSocket).lampAction();
+        ForwardData forwardData =new ForwardData(serverID, lampID, userName, token, action, newDeviceDescription,webSocket);
+        forwardData.sendAction();
+        return forwardData.waitForReply();
     }
 
     @RequestMapping(value = "/remoteAction", method = RequestMethod.GET)
@@ -45,25 +42,22 @@ public class IOTController {
                          @RequestParam(value = "deviceId", defaultValue = "") String deviceID,
                          @RequestParam(value = "userName", defaultValue = "") String userName,
                          @RequestParam(value = "userToken", defaultValue = "") String token,
-                         @RequestParam(value = "remoteOption", defaultValue = "0") int remoteOption) throws Exception {
-        //todo a use of while loop here might cause an issue of infinite loop, consider changing this
-        while (webSocket.userSession == null) {
-            this.webSocket = new WebSocketController().setDevicesWebSocket();
-        }
-        return new Remote(action, serverID, deviceID, userName, token, remoteOption,this.webSocket).remoteAction();
+                         @RequestParam(value = "remoteOption", defaultValue = "0") int remoteOption) {
+
+        ForwardData forwardData =new ForwardData(action, serverID, deviceID, userName, token, remoteOption,this.webSocket);
+        forwardData.sendAction();
+        return forwardData.waitForReply();
     }
 
     @RequestMapping(value = "/sensorAction", method = RequestMethod.GET)
     public String remote(@RequestParam(value = "action", defaultValue = "") String action,
                          @RequestParam(value = "deviceId", defaultValue = "") String deviceID,
                          @RequestParam(value = "userName", defaultValue = "") String userName,
-                         @RequestParam(value = "userToken", defaultValue = "") String token) throws Exception {
-        //todo a use of while loop here might cause an issue of infinite loop, consider changing this
-        while (webSocket.userSession == null) {
-            this.webSocket = new WebSocketController().setDevicesWebSocket();
-        }
+                         @RequestParam(value = "userToken", defaultValue = "") String token) {
 
-        return new Sensor(action, serverID, deviceID, userName, token,webSocket).sensorAction();
+        ForwardData forwardData =new ForwardData(action, serverID, deviceID, userName, token,webSocket);
+        forwardData.sendAction();
+        return forwardData.waitForReply();
     }
 
     @RequestMapping(value = "/userRegister", method = RequestMethod.POST)
