@@ -13,6 +13,7 @@ public class Message {
     private String handlerID;
 
     private String lampStatus;
+    private String relayID;
 
     private String userName;
     private String userToken;
@@ -214,5 +215,13 @@ public class Message {
 
     public void setTempSensorStatus(String tempSensorStatus) {
         this.tempSensorStatus = tempSensorStatus;
+    }
+
+    public String getRelayID() {
+        return relayID;
+    }
+
+    public void setRelayID(String relayID) {
+        this.relayID = relayID;
     }
 }

@@ -41,7 +41,7 @@ public class ForwardData {
      * @param webSocket websocket object that the data will be send on
      * @param newDeviceDescription used for purpose of changing the name of the device
      */
-    public ForwardData(String from, String to, String userName, String token, String action, String newDeviceDescription,
+    public ForwardData(String from, String to, String userName, String token, String action, String newDeviceDescription,String relayID,
                        WebSocketMessageClientEndpoint webSocket) {
         this.message = new Message();
         this.message.setAction(action);
@@ -50,10 +50,9 @@ public class ForwardData {
         this.message.setUserToken(token);
         this.message.setUserName(userName);
         this.message.setDeviceDescription(newDeviceDescription);
+        this.message.setRelayID(relayID);
         this.webSocket = webSocket;
-
     }
-
     //Remote
 
     /***

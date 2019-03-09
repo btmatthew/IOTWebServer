@@ -21,11 +21,11 @@ import javax.websocket.WebSocketContainer;
 @ClientEndpoint
 public class WebSocketMessageClientEndpoint {
 
-    private Session socketSession = null;
+    public Session socketSession = null;
     private HashMap<String,MessageHandler> messageHandlerHashMap = new HashMap<>();
 
 
-    WebSocketMessageClientEndpoint(URI endpointURI) {
+    public WebSocketMessageClientEndpoint(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, endpointURI);

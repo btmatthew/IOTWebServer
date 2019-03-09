@@ -4,6 +4,7 @@ import webSocket.objects.User;
 
 import javax.websocket.*;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * ChatServer Client
@@ -15,7 +16,6 @@ public class WebSocketUserClientEndpoint {
 
     private Session userSession = null;
     private UserHandler userHandler;
-
 
     public WebSocketUserClientEndpoint(URI endpointURI) {
         try {
@@ -87,8 +87,8 @@ public class WebSocketUserClientEndpoint {
      *
      * @author Jiji_Sasidharan
      */
-    public static interface UserHandler {
+    public interface UserHandler {
 
-        public void handleUser(User user);
+        void handleUser(User user);
     }
 }
